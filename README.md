@@ -1,45 +1,62 @@
-# electron-quick-start
+# infoscreen
 
-**Clone and run for a quick way to see Electron in action.**
+An infoscreen for my Raspberry Pi to show current weather, news , calendar, etc.
 
-This is a minimal Electron application based on the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start) within the Electron documentation.
+You just need a file `src/js/Secrets.js`. It should look like this:
 
-**Use this app along with the [Electron API Demos](https://electronjs.org/#get-started) app for API code examples to help you get started.**
+```js
+module.exports = {
+    container_name: [
+        {
+            key: value
+        }
+    ]
+}
+```
+e.g.:
+```js
+module.exports = {
+    weather: [
+        {
+            coords: "51.xxxx,13.xxxx",
+            api_key: "abcdefg123456"
+        }
+    ],
+    dvb: [
+        {
+            stop_id: 123456
+        }
+    ]
+}
+```
+(Obviously obfuscated for privacy reasons).
 
-A basic Electron application needs just these files:
-
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.js` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
-- `index.html` - A web page to render. This is the app's **renderer process**.
-
-You can learn more about each of these components within the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start).
+Because it uses a custom JS container class it should be easely expendable, even if the code is not really documentated.
 
 ## To Use
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+1. Clone
+2. npm install
+3. build... I guess?
+
+You can build it for armv7l (RPi) via [Electron builder multi platform build](https://www.electron.build/multi-platform-build).
 
 ```bash
-# Clone this repository
-git clone https://github.com/electron/electron-quick-start
-# Go into the repository
-cd electron-quick-start
-# Install dependencies
-npm install
-# Run the app
-npm start
-```
+# Docker command in repo directory:
+docker run --rm -ti \
+ --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS_TAG|TRAVIS|TRAVIS_REPO_|TRAVIS_BUILD_|TRAVIS_BRANCH|TRAVIS_PULL_REQUEST_|APPVEYOR_|CSC_|GH_|GITHUB_|BT_|AWS_|STRIP|BUILD_') \
+ --env ELECTRON_CACHE="/root/.cache/electron" \
+ --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder" \
+ -v ${PWD}:/project \
+ -v ${PWD##*/}-node-modules:/project/node_modules \
+ -v ~/.cache/electron:/root/.cache/electron \
+ -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+ electronuserland/builder:wine
 
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+ # In docker container:
+ yarn && yarn dist
+ ```
 
-## Resources for Learning Electron
-
-- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
-- [electronjs.org/community#boilerplates](https://electronjs.org/community#boilerplates) - sample starter apps created by the community
-- [electron/electron-quick-start](https://github.com/electron/electron-quick-start) - a very basic starter Electron app
-- [electron/simple-samples](https://github.com/electron/simple-samples) - small applications with ideas for taking them further
-- [electron/electron-api-demos](https://github.com/electron/electron-api-demos) - an Electron app that teaches you how to use Electron
-- [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps) - small demo apps for the various Electron APIs
-
-## License
-
-[CC0 1.0 (Public Domain)](LICENSE.md)
+## Licence
+* Weather icons from [erikflowers/weather-icons](https://github.com/erikflowers/weather-icons) licensed under [SIL OFL 1.1](http://scripts.sil.org/OFL)
+* This code licensed under [CC0-1.0](../blob/master/LICENSE)
