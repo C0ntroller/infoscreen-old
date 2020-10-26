@@ -6,7 +6,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "./node_modules/.bin/electron-builder --linux deb --armv7l"
+    "dist": "./node_modules/.bin/electron-builder --linux deb --armv7l",
+    "build": "./node_modules/.bin/electron-builder"
   },
   "keywords": [
     "infoscreen",
@@ -17,10 +18,10 @@
   ],
   "author": {
     "name": "Daniel Kluge",
-    "email": "daniel.kluge.98@gmx.de",
+    "email": "daniel@c0ntroller.de",
     "url": "https://c0ntroller.de"
   },
-  "license": "ISC",
+  "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^9.2.0",
     "electron-builder": "^22.8.0"
