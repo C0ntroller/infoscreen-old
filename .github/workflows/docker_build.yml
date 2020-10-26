@@ -1,0 +1,34 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Build with Docker
+
+on:
+  push:
+    branches: [ senpai ]
+  pull_request:
+    branches: [ senpai ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: electronuserland/builder:wine
+      env:
+        ELECTRON_CACHE: "/root/.cache/electron"
+        ELECTRON_BUILDER_CACHE: "/root/.cache/electron-builder"
+      volumes:
+        - ${{ github.workspace }}:/project:rw
+        - ~/.cache/electron:/root/.cache/electron
+        - ~/.cache/electron-builder:/root/.cache/electron-builder
+    steps:
+    - uses: actions/checkout@v2
+    - run: yarn
+      name: Install dependencies
+    - run: yarn dist
+      name: Build RPi image
+    - name: Archive RPi image
+      uses: actions/upload-artifact@v2
+      with:
+          name: AppImage
+          path: dist/infoscreen*_armv7l.deb
