@@ -1,0 +1,254 @@
+:root {
+    --containerBg: rgba(255,255,255,0.5);
+    --spotifyColor: transparent;
+    --textColor: #000000;
+    --iconColor: #000000;
+}
+
+*, *:before, *:after {    
+    box-sizing: border-box;
+    color: var(--textColor);
+}
+
+body {
+    display: grid;
+    grid-template-areas:
+        "date-weather date-weather calendar"
+        "date-weather date-weather calendar"
+        "map          dvb          news"
+        "map          spotify      news";
+    grid-template-columns: 28vw auto 28vw;
+    grid-template-rows: 18vh 19vh 19vh 19vh;
+    column-gap: 3vw;
+    row-gap: 5vh;
+    align-items: stretch;
+    justify-content: stretch;
+    height: 100%;
+    width: 100vw;  
+    max-width: 100%;
+    font-family: Arial;
+    margin:0;
+    padding:5vh;
+    transition: background-image 1s linear;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.container {
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);   
+    border-radius: 5px;
+    background: var(--containerBg);    
+    backdrop-filter: blur(5px);
+    padding:10px;
+    overflow:hidden;
+}
+
+.container * {
+    margin:auto;
+}
+
+/* Individual container settings */
+/** DVB **/
+#dvbMonitorContainer { 
+    grid-area: dvb;   
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 50px;
+    justify-self: stretch;
+}
+#dvbMonitorContainer table {
+    border-collapse: collapse;
+    width:100%;
+}
+#dvbMonitorContainer table tr td {
+    padding:3px;
+    border-bottom:1px solid #000000;
+}
+#dvbMonitorContainer .dvbDescHeader {
+    font-weight:bold;
+    font-size:small;
+    text-align: right;
+}
+#dvbMonitorContainer .dvbDescHeader:first-of-type {
+    font-weight:bold;
+    font-size:large;
+    text-align: left;
+}
+
+/** Time and Weather **/
+#dateWeatherContainer {
+    grid-area: date-weather;
+    display: grid;
+    grid-template-areas: 
+        "time currentIcon currentTemp"
+        "date currentCondition currentCondition"
+        "forecast forecast forecast";
+    grid-template-columns: auto min-content min-content;
+    grid-template-rows: min-content min-content auto;
+    column-gap: 1vw;
+    row-gap:0;
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 10px; 
+}
+#clock {
+    grid-area:time;
+    font-size:14vh;
+}
+#weatherIcon {    
+    grid-area:currentIcon;
+    height:15vh;
+}
+#dateWeatherContainer svg {
+    height: 100%;
+    fill: var(--iconColor);
+}
+#temperature {
+    grid-area:currentTemp;
+    font-size:12vh;
+}
+#date {
+    grid-area:date;
+    font-size: 2.5vh;
+    padding-bottom: 10px;
+}
+#currentWeatherInfos {
+    grid-area:currentCondition;
+    font-size: 2.5vh;
+    padding-bottom: 10px;
+}
+#futureWeatherInfos {
+    border-top:1px solid var(--iconColor);
+    grid-area:forecast;
+    height:100%;
+    width:100%;
+}
+#futureWeatherInfos .futureWeatherHeader {
+    text-align: center;
+    font-size: 3vh;
+    font-weight: bold;
+}
+#futureWeatherInfos .futureWeatherHighTemp, #futureWeatherInfos .futureWeatherLowTemp {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 3.5vh;
+}
+#futureWeatherInfos td {
+    padding-right: 5px;
+}
+
+/** Calendar **/
+#calendarContainer {
+    grid-area: calendar;
+}
+#calendarContainer table {
+    width: 100%;
+    border-collapse: collapse;
+}
+#calendarContainer table .calendarDateHeader {
+    font-weight: bold;
+    font-size: 2vh;
+    background: rgba(0, 0, 0, .1);
+}
+#calendarContainer table td {
+    padding: 5px;
+}
+#calendarContainer table tr td:first-of-type {
+    width: 100%;
+}
+#calendarContainer table tr.calendarEntry {
+    border-top: 1px solid #000000;
+    font-size: 1.8vh;
+}
+
+
+/** Radar **/
+#radarContainer {
+    padding:5px !important;
+    grid-area: map;
+    place-self: center;
+    justify-self: center;
+}
+#radar, #radar-night {
+    max-width: max(calc(28vw - 10px), calc(43vh - 10px));
+}
+#radar-night {
+    image-rendering: pixelated;
+    width:max(calc(28vw - 10px), calc(43vh - 10px));
+}
+
+/** Spotify **/
+#spotifyContainer {
+    grid-area: spotify;
+}
+.spotifyContent {    
+    display: grid;
+    grid-template-columns: auto max-content;
+    justify-content: start;
+    width:100%;
+    height:100%;
+    padding:5px;
+    background: var(--spotifyColor);
+    border-radius: 5px;
+    /*overflow:hidden;*/
+}
+.spotifyContent p {
+    max-width: 21vw;
+    color: inherit;
+    word-wrap: normal;
+}
+.spotifyContent .spotify_title {
+    font-size: 180%;
+    font-weight: bold;
+    color: inherit;
+}
+
+/** News **/
+#newsContainer {
+    grid-area: news;
+}
+#newsContainerInner {
+    height:100%;
+    width: 100%;
+    overflow:hidden;   
+    border-radius: 5px;
+}
+#newsContainerInner table {
+    animation: newsSlider 60s linear 0s infinite normal;
+    border-collapse: collapse;
+}
+#newsContainerInner table tr {
+    background:rgba(0, 0, 0, .1);
+    border-bottom: 2px solid black;
+}
+#newsContainerInner table tr td {
+    padding:5px;
+}
+#newsContainerInner table tr td:last-child {
+    text-align: right;
+    font-size: smaller;
+}
+#newsContainerInner table tr td:first-child {
+    font-size: 120%;
+}
+
+@keyframes newsSlider {
+    from {transform: translateY(0);}
+    to {transform: translateY(-100%);}
+}
+
+/** Zitat **/
+#quoteContainer {
+    border-radius:0;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+    width:95vw;
+    padding:5px !important;
+    position:fixed;
+    top:0px;
+    left:50%;
+    transform: translateX(-50%);
+    text-align:center;
+    font-size:110%;
+}

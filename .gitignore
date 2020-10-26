@@ -1,0 +1,5 @@
+node_modules/
+src/js/Secrets.js
+dist/
+src/img/bg/
+!src/img/bg/0.jpg
