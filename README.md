@@ -1,4 +1,5 @@
 # infoscreen
+![Build with Docker](https://github.com/C0ntroller/infoscreen/workflows/Build%20with%20Docker/badge.svg)
 
 An infoscreen for my Raspberry Pi to show current weather, news , calendar, etc.
 
@@ -56,6 +57,7 @@ docker run --rm -ti \
  # In docker container:
  yarn && yarn dist
  ```
+ Or just download the artifact from the latest CI run.
 
 ## Licence
 * Weather icons from [erikflowers/weather-icons](https://github.com/erikflowers/weather-icons) licensed under [SIL OFL 1.1](http://scripts.sil.org/OFL)
