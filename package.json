@@ -7,7 +7,8 @@
   "scripts": {
     "start": "electron .",
     "dist": "./node_modules/.bin/electron-builder --linux deb --armv7l",
-    "build": "./node_modules/.bin/electron-builder"
+    "build": "./node_modules/.bin/electron-builder",
+    "clean": "rm -rf dist/ node_modules/"
   },
   "keywords": [
     "infoscreen",
