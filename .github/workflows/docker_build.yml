@@ -28,5 +28,5 @@ jobs:
     - name: Archive RPi image
       uses: actions/upload-artifact@v2
       with:
-          name: AppImage
+          name: armv7l deb package
           path: dist/infoscreen*_armv7l.deb
