@@ -19,8 +19,6 @@ jobs:
         ELECTRON_BUILDER_CACHE: "/root/.cache/electron-builder"
       volumes:
         - ${{ github.workspace }}:/project:rw
-        - ~/.cache/electron:/root/.cache/electron
-        - ~/.cache/electron-builder:/root/.cache/electron-builder
     steps:
     - uses: actions/checkout@v2
     - run: yarn
