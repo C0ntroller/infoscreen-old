@@ -8,6 +8,7 @@ class VolumIOContainer {
         this.socket = io.connect(this.url + ":" + secrets["volumio"][secretsIndex]["ws_port"]);
         this.htmlContext = document.getElementById("spotify" + secretsIndex);
         this.lock = false;
+        this.queue = [];
 
         this.retryIntervall = setInterval(this.socket.connect, 5*60*1000);
 
@@ -20,7 +21,10 @@ class VolumIOContainer {
             socket.connect();
         });
         this.socket.on("pushState", (data) => {
-            if(this.lock) return;
+            if(this.lock) {
+                this.queue.push(data);
+                return;
+            }
 
             this.lock = true;
             this.updateContainer(data);
@@ -48,6 +52,11 @@ class VolumIOContainer {
             musicInfo.style.color = CommonUtils.getTextToBgColor(pixelData.r,pixelData.g,pixelData.b);
             document.documentElement.style.setProperty("--spotifyColor", "rgba(" + pixelData.r + "," + pixelData.g + "," + pixelData.b + ", 0.8)");
         }.bind(this), false);
+
+        if(this.queue_check()) {
+            data = this.get_last_queue_item();
+        }
+
         img.src = data["albumart"].substring(0,1) == "/" ? this.url + data["albumart"] : data["albumart"];
         this.htmlContext.appendChild(img);
         
@@ -72,14 +81,31 @@ class VolumIOContainer {
     }
 
     resetHtmlContext() {
+        if(this.queue_check()) {
+            this.updateContainer(this.get_last_queue_item());
+            return;
+        }
+
         this.htmlContext.innerHTML = "<div></div><span style='font-size:200%'>Hier läuft gerade nichts...</span>";
         document.documentElement.style.setProperty("--spotifyColor", "transparent");
+
+        if(this.queue_check()) {
+            this.updateContainer(this.get_last_queue_item());
+            return;
+        }
+
         this.lock = false;
     }
 
     waitForRendered(infoElement) {
         function rendered() {
             this.htmlContext.appendChild(infoElement);
+            
+            if(this.queue_check()) {
+                this.updateContainer(this.get_last_queue_item());
+                return;
+            }
+
             this.lock = false;
         }
         
@@ -89,6 +115,16 @@ class VolumIOContainer {
         }
         
         requestAnimationFrame(startRender.bind(this));
+    }
+
+    queue_check() {
+        return this.queue.length > 0 ? true : false;
+    }
+
+    get_last_queue_item() {
+        let new_data = this.queue.pop();
+        this.queue = [];
+        return new_data;
     }
 }
 

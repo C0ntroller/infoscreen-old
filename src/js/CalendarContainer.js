@@ -26,7 +26,19 @@ class CalendarContainer extends DataContainerToken {
                 let dateHeader = document.createElement("td");
                 dateHeader.colSpan = "2";
                 dateHeader.classList.add("calendarDateHeader");
-                dateHeader.innerHTML = CommonUtils.dowToString(entryDate.getDay()) + ", " + entryDate.getDate() + ". " + (entryDate.getMonth() + 1) + ".";
+
+                let dayDif = this.dayOfYear(entryDate) - this.dayOfYear(new Date());
+                let dayDifString;
+                switch(dayDif) {
+                    case 0: dayDifString = "Heute"
+                        break;
+                    case 1: dayDifString = "Morgen"
+                        break;
+                    default: dayDifString = dayDif + " Tage";
+                        break;
+                }
+
+                dateHeader.innerHTML = CommonUtils.dowToString(entryDate.getDay()) + ", " + entryDate.getDate() + ". " + (entryDate.getMonth() + 1) + "." + " <span class='calendarDateHeaderSub'>(" + dayDifString + ")</span>";
                 table.appendChild(document.createElement("tr")).appendChild(dateHeader);
             }
 
@@ -47,6 +59,10 @@ class CalendarContainer extends DataContainerToken {
 
 
         document.getElementById("calendarContainer").innerHTML = table.outerHTML;
+    }
+
+    dayOfYear(date){
+        return (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
     }
 }
 

@@ -146,10 +146,15 @@ body {
     width: 100%;
     border-collapse: collapse;
 }
-#calendarContainer table .calendarDateHeader {
+.calendarDateHeader {
     font-weight: bold;
     font-size: 2vh;
     background: rgba(0, 0, 0, .1);
+}
+.calendarDateHeaderSub {
+    font-size: 1.5vh;
+    padding-top: 0.4vh;
+    float: right;
 }
 #calendarContainer table td {
     padding: 5px;
