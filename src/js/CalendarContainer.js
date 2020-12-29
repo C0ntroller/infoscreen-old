@@ -27,7 +27,7 @@ class CalendarContainer extends DataContainerToken {
                 dateHeader.colSpan = "2";
                 dateHeader.classList.add("calendarDateHeader");
 
-                let dayDif = this.dayOfYear(entryDate) - this.dayOfYear(new Date());
+                let dayDif = this.daysDifference(new Date(), entryDate);
                 let dayDifString;
                 switch(dayDif) {
                     case 0: dayDifString = "Heute"
@@ -61,8 +61,13 @@ class CalendarContainer extends DataContainerToken {
         document.getElementById("calendarContainer").innerHTML = table.outerHTML;
     }
 
-    dayOfYear(date){
-        return (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
+    daysDifference(date1, date2) {
+        if(date1 > date2) {
+            let tmp = date2;
+            date2 = date1;
+            date1 = tmp;
+        }
+        return Math.ceil((date2-date1) / 1000 / 60 / 60 / 24);
     }
 }
 
