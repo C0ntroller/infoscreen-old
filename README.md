@@ -61,4 +61,4 @@ docker run --rm -ti \
 
 ## Licence
 * Weather icons from [erikflowers/weather-icons](https://github.com/erikflowers/weather-icons) licensed under [SIL OFL 1.1](http://scripts.sil.org/OFL)
-* This code licensed under [CC0-1.0](../blob/master/LICENSE)
+* This code licensed under [CC0-1.0](../blob/master/LICENSE.md)
