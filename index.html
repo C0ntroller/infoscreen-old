@@ -90,7 +90,7 @@
       containerStash.interval_15min.items.push(new WeatherContainer());
       containerStash.interval_24h.items.push(new QuoteContainer());
       var volumio = new VolumIOContainer(0);
-      var time = new TimeAndBg(0,5,3);
+      var time = new TimeAndBg(3);
 
       for(var interval in containerStash) {
         containerStash[interval].items.forEach(element => {

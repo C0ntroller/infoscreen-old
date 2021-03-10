@@ -1,10 +1,11 @@
+const fs = require('fs');
 const CommonUtils = require("./CommonUtils.js");
 
 class TimeAndBg {
-    constructor(currentBg,numOfBgs,nightBg = false) {
-        this.currentBg = currentBg;
-        this.numOfBgs = numOfBgs;
-        this.nightBg = nightBg ? nightBg : currentBg;
+    constructor(nightBg = false) {
+        this.numOfBgs = fs.readdirSync(__dirname + "/../img/bg").length;
+        this.currentBg = Math.floor(Math.random() * this.numOfBgs);
+        this.nightBg = nightBg && nightBg < this.numOfBgs ? nightBg : this.currentBg;
         this.hourNow = -1;   
         this.nightMode = false;
         this.timeTO = setInterval(this.updateTime.bind(this), 500);
