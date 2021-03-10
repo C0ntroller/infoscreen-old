@@ -52,12 +52,9 @@ docker run --rm -ti \
  -v ${PWD##*/}-node-modules:/project/node_modules \
  -v ~/.cache/electron:/root/.cache/electron \
  -v ~/.cache/electron-builder:/root/.cache/electron-builder \
- electronuserland/builder:wine
-
- # In docker container:
- yarn && yarn dist
+ electronuserland/builder:wine \
+ /bin/bash -c "yarn && yarn dist"
  ```
- Or just download the artifact from the latest CI run.
 
 ## Licence
 * Weather icons from [erikflowers/weather-icons](https://github.com/erikflowers/weather-icons) licensed under [SIL OFL 1.1](http://scripts.sil.org/OFL)
