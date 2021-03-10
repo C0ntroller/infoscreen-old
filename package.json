@@ -24,12 +24,12 @@
   },
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^9.2.0",
-    "electron-builder": "^22.8.0"
+    "electron": "^12.0.0",
+    "electron-builder": "^22.10.5"
   },
   "dependencies": {
-    "fast-xml-parser": "^3.17.4",
+    "fast-xml-parser": "^3.18.0",
     "request": "^2.88.2",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^4.0.0"
   }
 }
