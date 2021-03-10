@@ -23,6 +23,7 @@
     "url": "https://c0ntroller.de"
   },
   "license": "CC0-1.0",
+  "repository": "github:C0ntroller/infoscreen",
   "devDependencies": {
     "electron": "^12.0.0",
     "electron-builder": "^22.10.5"
