@@ -1,11 +1,12 @@
 {
   "name": "infoscreen",
-  "version": "1.2.1",
+  "version": "1.2.4",
   "description": "Rewrite of my infoscreen for the RPi",
   "homepage": "https://c0ntroller.de",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "start-dev": "electron . --dev-tools",
     "dist": "./node_modules/.bin/electron-builder --linux deb --armv7l",
     "build": "./node_modules/.bin/electron-builder",
     "clean": "rm -rf dist/ node_modules/"
