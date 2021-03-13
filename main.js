@@ -20,7 +20,10 @@ function createWindow () {
   mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  // No slice because it differs between packaged and non-packaged version
+  if(process.argv.includes("--dev-tools")){
+    mainWindow.webContents.openDevTools()
+  }
 }
 
 // This method will be called when Electron has finished
