@@ -5,20 +5,19 @@ const CommonUtils = require("./CommonUtils.js");
 class VolumIOContainer {
     constructor(secretsIndex) {
         this.url = secrets["volumio"][secretsIndex]["ws_address"];
-        this.socket = io.connect(this.url + ":" + secrets["volumio"][secretsIndex]["ws_port"]);
+        this.socket = io(this.url + ":" + secrets["volumio"][secretsIndex]["ws_port"], {
+            reconnectionDelayMax: 5*60*1000,
+            autoConnect: false //To initialize listeners first
+        });
         this.htmlContext = document.getElementById("spotify" + secretsIndex);
         this.lock = false;
         this.queue = [];
 
-        this.retryIntervall = setInterval(this.socket.connect, 5*60*1000);
-
         this.socket.on("connect", () => {
-            clearInterval(this.retryIntervall);
-            //console.log("Client connected");
+            console.log("VolumIO connected");
         });
         this.socket.on("disconnect", () => {
-            this.retryIntervall = setInterval(this.socket.connect, 5*60*1000);
-            socket.connect();
+            console.warn("VolumIO disconnected!");
         });
         this.socket.on("pushState", (data) => {
             if(this.lock) {
@@ -29,7 +28,8 @@ class VolumIOContainer {
             this.lock = true;
             this.updateContainer(data);
         });
-
+        
+        this.socket.connect();
         this.socket.emit("getState");
     }
 
